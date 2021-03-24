@@ -193,7 +193,7 @@ td {
             LC_list.append(LC_name)
         response1 = client.describe_auto_scaling_groups()
         for ASG in response1['AutoScalingGroups']:
-            if ASG['LaunchConfigurationName'] in LC_list:
+            if ASG.get('LaunchConfigurationName') in LC_list:
                     LC_list.remove(ASG['LaunchConfigurationName'])
         LCs=[]
         for LC in LC_list:
@@ -226,7 +226,7 @@ td {
         f.close()
 
 
-if __name__ == "__main__":
+def lambda_handler(event, context):
     try:
         save_cost()
         send_report()
